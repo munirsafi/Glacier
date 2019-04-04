@@ -1,6 +1,6 @@
-# Glacier: A Python Microservice Framework
+# Glacier: A Lightweight Python Web Framework
 
-Glacier is a microservice framework being worked on purely for educational purposes and to better understand the development of web architecture in the Python language. Glacier utilizes the asyncio module to run all requests through an event loop powered by uvloop
+Glacier is a lightweight web framework being worked on purely for educational purposes and to better understand the development of web architecture in the Python language. Glacier utilizes the asyncio module to run all requests through an event loop powered by uvloop.
 
 **Example:**
 
