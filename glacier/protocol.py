@@ -24,4 +24,8 @@ class HTTPProtocol(asyncio.Protocol):
         headers = self.parse_headers(data)
         origin = self.transport.get_extra_info('socket').getpeername()
         print(f'[{datetime.now()}] [{headers["Method"]}] Request from {origin[0]}, fetching {headers["Path"]}')
-        routes[headers["Path"]](None, self.transport)
+        if(routes.get(headers["Path"]) != None):
+            routes[headers["Path"]](None, self.transport)
+        else:
+            self.transport.write('HTTP/1.1 404 Not Found\r\n\n'.encode())
+            self.transport.close()
