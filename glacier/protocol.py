@@ -1,6 +1,7 @@
 from datetime import datetime
 from .routing import Router, routes
 
+from .response import Response
 import asyncio
 
 class HTTPProtocol(asyncio.Protocol):
@@ -23,9 +24,10 @@ class HTTPProtocol(asyncio.Protocol):
     def data_received(self, data):
         headers = self.parse_headers(data)
         origin = self.transport.get_extra_info('socket').getpeername()
+        response = Response(self.transport)
         print(f'[{datetime.now()}] [{headers["Method"]}] Request from {origin[0]}, fetching {headers["Path"]}')
         if(routes.get(headers["Path"]) != None):
-            routes[headers["Path"]](None, self.transport)
+            routes[headers["Path"]](None, response)
         else:
             self.transport.write('HTTP/1.1 404 Not Found\r\n\n'.encode())
             self.transport.close()
